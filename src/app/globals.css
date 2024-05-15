@@ -1,0 +1,102 @@
+@import "tailwindcss/utilities";
+@import "tailwindcss/components";
+@import "tailwindcss/base";
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .responsive-div {
+    max-width: 400px;
+    width: 100%;
+  }
+}
+@font-face {
+  font-family: "font";
+  src: url("/fonts/Mitr/Mitr-Regular.ttf") format("truetype");
+}
+
+body {
+  font-family: "font";
+  color: rgb(255, 255, 255);
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Define keyframe animation for electricity effect */
+@keyframes electric {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* Apply the animation to the electricity pseudo-element */
+.animate-electric {
+  animation: electric 0.5s ease-out forwards;
+}
+
+/* Style for electric border */
+.border-electric {
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00f7,
+    #ff0000
+  );
+  background-size: 1800% 1800%;
+  border-radius: 50%;
+  animation: electric-gradient 10s linear infinite;
+}
+
+@keyframes electric-gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+.container {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.container.fade-enter {
+  opacity: 0;
+}
+
+.container.fade-enter-active {
+  opacity: 1;
+}
