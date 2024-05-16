@@ -7,15 +7,16 @@ const QuizButton = ({
   handleAnswer,
   isCorrect,
   isDisabled,
-  text,
+  innerHtml,
 }: {
   index: number;
   question: string;
   isCorrect: boolean;
   isDisabled: boolean;
-  text: string;
+  innerHtml: string;
   handleAnswer: (isCorrect: boolean, question: string) => {};
 }) => {
+  console.log("Question here: ", question);
   return (
     <button
       key={question + index + "button"}
@@ -50,7 +51,7 @@ const QuizButton = ({
         />
       </div>
       <span key={question + index + "span"} className="z-10">
-        {text}
+        {innerHtml}
       </span>
     </button>
   );

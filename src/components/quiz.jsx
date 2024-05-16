@@ -4,7 +4,13 @@ import { TypewriterEffectSmoothComponent } from "./aceternity/typewriter-demo";
 import QuizButton from "../components/custom/QuizButton";
 import ProgressBar from "../components/custom/QuizProgressBar";
 
-const Quiz = ({ questions: initialQuestions }) => {
+const text = {
+  remaining: { en: "Remaining", fr: "Restant" },
+  correct: { en: "Correct", fr: "Correcte" },
+  wrong: { en: "Wrong", fr: "Faux" },
+};
+
+const Quiz = ({ questions: initialQuestions, language }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [remainingCount, setRemainingCount] = useState(initialQuestions.length);
   const [score, setScore] = useState(0);
@@ -15,20 +21,6 @@ const Quiz = ({ questions: initialQuestions }) => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [isTrembling, setIsTrembling] = useState(false);
-
-  const markPageAsDone = () => {
-    // setPageCompletion((prevState) => ({
-    //   ...prevState,
-    //   home: true,
-    // }));
-  };
-
-  const markPageAsNotDone = () => {
-    // setPageCompletion((prevState) => ({
-    //   ...prevState,
-    //   home: false,
-    // }));
-  };
 
   const triggerTremble = () => {
     setIsTrembling(true);
@@ -80,15 +72,14 @@ const Quiz = ({ questions: initialQuestions }) => {
     }
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
-      handleWordsUpdate(questions[currentQuestion + 1].question);
+      handleWordsUpdate(questions[currentQuestion + 1].title[language]);
     } else {
       setFinished(true);
-      markPageAsDone();
     }
   };
 
   useEffect(() => {
-    handleWordsUpdate(initialQuestions[currentQuestion].question);
+    handleWordsUpdate(initialQuestions[currentQuestion].title[language]);
   }, [initialQuestions, currentQuestion]);
 
   return (
@@ -98,14 +89,16 @@ const Quiz = ({ questions: initialQuestions }) => {
           <div className="absolute right-10 bottom-0 mb-[-50px] flex flex-col justify-center items-start">
             <div className="text-xl font-semibold">
               {" "}
-              Remaining: {remainingCount}{" "}
+              {text.remaining[language]} {remainingCount}{" "}
             </div>
 
             <div className="w-full h-px bg-white mx-auto my-1"></div>
 
-            <div className="text-lg font-semibold">Correct: {score}</div>
+            <div className="text-lg font-semibold">
+              {text.correct[language]} {score}
+            </div>
             <div className="text-lg font-semibold mb-2">
-              Wrong: {wrongScore}
+              {text.wrong[language]} {wrongScore}
             </div>
             <ProgressBar total={questions?.length} answers={questions} />
           </div>
@@ -118,7 +111,8 @@ const Quiz = ({ questions: initialQuestions }) => {
         {!finished && currentQuestion < questions.length && (
           <div>
             <div style={{ fontSize: 40, marginBottom: 10 }}>
-              Question {currentQuestion + 1} out of {questions?.length}
+              Question {currentQuestion + 1}{" "}
+              {language === "en" ? "out of" : "sur"} {questions?.length}
             </div>
             <TypewriterEffectSmoothComponent key={resetKey} words={words} />
             <div className="grid grid-cols-2">
@@ -136,7 +130,7 @@ const Quiz = ({ questions: initialQuestions }) => {
                     handleAnswer={handleAnswer}
                     isCorrect={option.isCorrect}
                     isDisabled={isDisabled}
-                    text={option.text}
+                    innerHtml={option.text[language]}
                   />
                 </div>
               ))}
@@ -159,7 +153,6 @@ const Quiz = ({ questions: initialQuestions }) => {
                   setRemainingCount(questions.length);
                   setWrongScore(0);
                   setCurrentQuestion(0);
-                  markPageAsNotDone();
                 }}
               >
                 Try again

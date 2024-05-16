@@ -3,8 +3,8 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 
-const baseUrl = "/home/sarabov/code/tride-museum/out";
-// const baseUrl = "";
+// const baseUrl = "/home/sarabov/code/tride-museum/out";
+const baseUrl = "";
 
 module.exports = withBundleAnalyzer({
   poweredByHeader: false,
