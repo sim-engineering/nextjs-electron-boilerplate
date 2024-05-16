@@ -10,7 +10,7 @@ const text = {
   wrong: { en: "Wrong", fr: "Faux" },
 };
 
-const Quiz = ({ questions: initialQuestions, language }) => {
+const Quiz = ({ questions: initialQuestions, language, handleRotate }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [remainingCount, setRemainingCount] = useState(initialQuestions.length);
   const [score, setScore] = useState(0);
@@ -71,10 +71,13 @@ const Quiz = ({ questions: initialQuestions, language }) => {
       setWrongScore(wrongScore + 1);
     }
     if (currentQuestion < questions.length - 1) {
+      handleRotate();
       setCurrentQuestion(currentQuestion + 1);
       handleWordsUpdate(questions[currentQuestion + 1].title[language]);
     } else {
-      setFinished(true);
+      setTimeout(() => {
+        setFinished(true);
+      }, 2000);
     }
   };
 
