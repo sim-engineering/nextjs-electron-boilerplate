@@ -2,6 +2,9 @@
 
 This repo serves as a starting point of building a NextJS React + TailwindCSS app that can be exported to a native executable for iOS, Win or Linux using Electron.
 
+Here's the example app:
+https://nextjs-electron-boilerplate.netlify.app/
+
 ## Featured technologies:
 [NextJS](https://nextjs.org/)
 [Electron](https://www.electronjs.org/)
