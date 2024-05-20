@@ -117,14 +117,12 @@ const IndexPage = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      /** <Navigation />
-      <button
+      {/* <button
         onClick={switchLanguage}
         className="m-4 p-2 text-white border border-white rounded-xl"
       >
         {text.language_button[language]}
-      </button>
-      **/
+      </button> */}
       <div className="flex-grow px-4 py-8">
         <Quiz questions={questions} language={language} />
       </div>
