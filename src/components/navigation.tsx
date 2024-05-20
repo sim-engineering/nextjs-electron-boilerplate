@@ -1,6 +1,7 @@
 "use client";
 import React, { useContext } from "react";
 import { FaCheckCircle } from "react-icons/fa";
+import Link from "next/link";
 
 const Navigation = () => {
   return (

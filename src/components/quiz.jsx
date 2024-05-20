@@ -10,7 +10,8 @@ const text = {
   wrong: { en: "Wrong", fr: "Faux" },
 };
 
-const Quiz = ({ questions: initialQuestions, language, handleRotate }) => {
+const Quiz = ({ questions: initialQuestions, language }) => {
+  const [rotate, setRotate] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [remainingCount, setRemainingCount] = useState(initialQuestions.length);
   const [score, setScore] = useState(0);
@@ -21,6 +22,11 @@ const Quiz = ({ questions: initialQuestions, language, handleRotate }) => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [isTrembling, setIsTrembling] = useState(false);
+
+  const handleRotate = () => {
+    setRotate(true);
+    setTimeout(() => setRotate(false), 1000); // Adjust time to match the animation duration
+  };
 
   const triggerTremble = () => {
     setIsTrembling(true);
@@ -117,26 +123,36 @@ const Quiz = ({ questions: initialQuestions, language, handleRotate }) => {
               Question {currentQuestion + 1}{" "}
               {language === "en" ? "out of" : "sur"} {questions?.length}
             </div>
-            <TypewriterEffectSmoothComponent key={resetKey} words={words} />
-            <div className="grid grid-cols-2">
-              {questions[currentQuestion].options.map((option, index) => (
-                <div
-                  key={questions[currentQuestion].question + index + "div"}
-                  className={`flex flex-wrap col-span-1 items-center justify-center
+            <div
+              className={`relative group p-4 m-4 border border-slate rounded-xl transform transition-transform duration-1000 ${
+                rotate ? "rotate-x" : "rotate-reverse-x"
+              }`}
+            >
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-slate-800 to-slate-900 rounded-lg blur opacity-60 group-hover:opacity-10 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+
+              <div>
+                <TypewriterEffectSmoothComponent key={resetKey} words={words} />
+                <div className="grid grid-cols-2">
+                  {questions[currentQuestion].options.map((option, index) => (
+                    <div
+                      key={questions[currentQuestion].question + index + "div"}
+                      className={`flex flex-wrap col-span-1 items-center justify-center
                     ${index > 1 ? "mt-10" : ""}
                     ${index % 2 === 0 ? "ml-4" : "mr-4"}
                   `}
-                >
-                  <QuizButton
-                    index={index}
-                    question={questions[currentQuestion].question}
-                    handleAnswer={handleAnswer}
-                    isCorrect={option.isCorrect}
-                    isDisabled={isDisabled}
-                    innerHtml={option.text[language]}
-                  />
+                    >
+                      <QuizButton
+                        index={index}
+                        question={questions[currentQuestion].question}
+                        handleAnswer={handleAnswer}
+                        isCorrect={option.isCorrect}
+                        isDisabled={isDisabled}
+                        innerHtml={option.text[language]}
+                      />
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         )}
@@ -199,6 +215,116 @@ const Quiz = ({ questions: initialQuestions, language, handleRotate }) => {
           100% {
             transform: translate(1px, -2px) rotate(-1deg);
           }
+        }
+
+        @keyframes rotateX {
+          0% {
+            transform: rotateX(0deg);
+          }
+          5% {
+            transform: rotateX(5deg);
+          }
+          10% {
+            transform: rotateX(10deg);
+          }
+          15% {
+            transform: rotateX(15deg);
+          }
+          20% {
+            transform: rotateX(20deg);
+          }
+          25% {
+            transform: rotateX(25deg);
+          }
+          30% {
+            transform: rotateX(30deg);
+          }
+          35% {
+            transform: rotateX(35deg);
+          }
+          40% {
+            transform: rotateX(40deg);
+          }
+          45% {
+            transform: rotateX(45deg);
+          }
+          50% {
+            transform: rotateX(50deg);
+          }
+          55% {
+            transform: rotateX(55deg);
+          }
+          60% {
+            transform: rotateX(60deg);
+          }
+          65% {
+            transform: rotateX(65deg);
+          }
+          70% {
+            transform: rotateX(70deg);
+          }
+          75% {
+            transform: rotateX(75deg);
+          }
+          80% {
+            transform: rotateX(80deg);
+          }
+          85% {
+            transform: rotateX(85deg);
+          }
+          90% {
+            transform: rotateX(90deg);
+          }
+          95% {
+            transform: rotateX(95deg);
+          }
+          100% {
+            transform: rotateX(100deg);
+          }
+        }
+
+        @keyframes rotateReverseX {
+          0% {
+            transform: rotateX(100deg);
+          }
+          10% {
+            transform: rotateX(90deg);
+          }
+          20% {
+            transform: rotateX(80deg);
+          }
+          30% {
+            transform: rotateX(70deg);
+          }
+          40% {
+            transform: rotateX(60deg);
+          }
+          50% {
+            transform: rotateX(50deg);
+          }
+          60% {
+            transform: rotateX(40deg);
+          }
+          70% {
+            transform: rotateX(30deg);
+          }
+          80% {
+            transform: rotateX(20deg);
+          }
+          90% {
+            transform: rotateX(10deg);
+          }
+          100% {
+            transform: rotateX(0deg);
+          }
+        }
+
+        .rotate-x {
+          animation: rotateX 1s ease-in-out forwards;
+        }
+
+        .rotate-reverse-x {
+          animation: rotateReverseX 1s ease-in-out forwards;
         }
 
         .animate-shake {
